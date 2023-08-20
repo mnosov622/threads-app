@@ -1,5 +1,4 @@
 "use client";
-
 import Link from "next/link";
 import { sidebarLinks } from "@/constants";
 import Image from "next/image";
