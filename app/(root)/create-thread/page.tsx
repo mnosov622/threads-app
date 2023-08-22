@@ -18,7 +18,7 @@ async function Page() {
   return (
     <>
       <h1 className="head-text">Create thread</h1>;
-      <PostThread userId={userInfo[0]._id} />
+      <PostThread userId={userInfo[0]._id.toString()} />
     </>
   );
 }
