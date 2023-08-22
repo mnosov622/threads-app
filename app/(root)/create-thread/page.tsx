@@ -10,14 +10,16 @@ async function Page() {
 
   const userInfo: any = await fetchUser(user.id);
 
-  //   if (!userInfo?.onboarded) {
-  //     redirect("/onboarding");
-  //   }
+  // If user has not onboarded, redirect to onboarding page
+  if (!userInfo[0]?.onboarded) {
+    redirect("/onboarding");
+  }
 
+  console.log("user", userInfo[0]);
   return (
     <>
       <h1 className="head-text">Create thread</h1>;
-      <PostThread userId={userInfo._id} />
+      <PostThread userId={userInfo[0]._id} />
     </>
   );
 }
