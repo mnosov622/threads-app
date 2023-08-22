@@ -104,3 +104,48 @@ export async function fetchThreadById(id: string) {
     throw new Error(`Failed to fetch thread: ${error.message}`);
   }
 }
+
+export async function addCommentToThread(
+  threadId: string,
+  commentText: string,
+  userId: string,
+  path: string
+) {
+  connectToDB();
+
+  try {
+    // Find the original thread by its ID
+    const originalThread = await Thread.findById(threadId);
+
+    if (!originalThread) {
+      throw new Error("Thread not found");
+    }
+
+    // Create the new comment thread
+    const commentThread = new Thread({
+      text: commentText,
+      author: userId,
+      parentId: threadId,
+    });
+
+    // Save the comment thread to the database
+    const savedCommentThread = await commentThread.save();
+
+    if (!originalThread.children) {
+      originalThread.children = [];
+    }
+    originalThread.children?.push(savedCommentThread._id);
+
+    await Thread.findByIdAndUpdate(originalThread.id, {
+      $push: { children: savedCommentThread._id },
+    });
+
+    // Save the updated original thread to the database
+    await originalThread.save();
+
+    revalidatePath(path);
+  } catch (err) {
+    // console.error("Error while adding comment:", err);
+    // throw new Error("Unable to add comment");
+  }
+}
