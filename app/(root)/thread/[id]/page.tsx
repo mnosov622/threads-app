@@ -1,9 +1,9 @@
-"use client";
-
 import ThreadCard from "@/components/cards/ThreadCard";
-import { redirect, useParams } from "next/navigation";
+import { redirect } from "next/navigation";
 import { currentUser } from "@clerk/nextjs";
 import { fetchUser } from "@/lib/actions/user.actions";
+import { fetchThreadById } from "@/lib/actions/thread.actions";
+import Comment from "@/components/forms/Comment";
 
 interface ParamsProp {
   params: {
@@ -17,7 +17,7 @@ const Page = async ({ params }: ParamsProp) => {
   const user = await currentUser();
   if (!user) return null;
 
-  const userInfo = await fetchUser(user.id);
+  const userInfo: any = await fetchUser(user.id);
 
   if (!userInfo[0].onboarded) {
     redirect("/onboarding");
@@ -39,6 +39,14 @@ const Page = async ({ params }: ParamsProp) => {
             community={thread.community}
             createdAt={thread.createdAt}
             comments={thread.children}
+          />
+        </div>
+
+        <div className="mt-7">
+          <Comment
+            threadId={thread.id}
+            currentUserImg={user.imageUrl}
+            currentUserId={JSON.stringify(userInfo._id)}
           />
         </div>
       </section>
