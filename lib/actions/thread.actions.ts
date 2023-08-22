@@ -136,9 +136,9 @@ export async function addCommentToThread(
     }
     originalThread.children?.push(savedCommentThread._id);
 
-    await Thread.findByIdAndUpdate(originalThread.id, {
-      $push: { children: savedCommentThread._id },
-    });
+    // await Thread.findByIdAndUpdate(originalThread.id, {
+    //   $push: { children: savedCommentThread._id },
+    // });
 
     // Save the updated original thread to the database
     await originalThread.save();
