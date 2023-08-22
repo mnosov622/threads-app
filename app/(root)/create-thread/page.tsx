@@ -15,7 +15,6 @@ async function Page() {
     redirect("/onboarding");
   }
 
-  console.log("user", userInfo[0]);
   return (
     <>
       <h1 className="head-text">Create thread</h1>;

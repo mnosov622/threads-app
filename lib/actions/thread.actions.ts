@@ -19,7 +19,7 @@ export async function createThread({ text, author, communityId, path }: Params) 
     const createdThread = await Thread.create({
       text,
       author,
-      community: null, // Assign communityId if provided, or leave it null for personal account
+      community: null,
     });
 
     // Update User model
@@ -31,4 +31,38 @@ export async function createThread({ text, author, communityId, path }: Params) 
   } catch (error: any) {
     throw new Error(`Failed to create thread: ${error.message}`);
   }
+}
+
+export async function fetchPosts(pageNumber = 1, pageSize = 20) {
+  connectToDB();
+
+  // Calculate the number of posts to skip based on the page number and page size.
+  const skipAmount = (pageNumber - 1) * pageSize;
+
+  const postsQuery = Thread.find({ parentId: { $in: [null, undefined] } })
+    .sort({ createdAt: "desc" })
+    .skip(skipAmount)
+    .limit(pageSize)
+    .populate({
+      path: "author",
+      model: User,
+    })
+    .populate({
+      path: "children",
+      populate: {
+        path: "author",
+        model: User,
+        select: "_id name parentId image",
+      },
+    });
+
+  const totalPostsCount = await Thread.countDocuments({
+    parentId: { $in: [null, undefined] },
+  });
+
+  const posts = await postsQuery.exec();
+
+  const isNext = totalPostsCount > skipAmount + posts.length;
+
+  return { posts, isNext };
 }
