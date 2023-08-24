@@ -18,7 +18,7 @@ const Page = async () => {
 
   //get Activity
 
-  const activity = await getActivity(userInfo[0]._id);
+  const activity = await getActivity(userInfo._id);
 
   return (
     <section>

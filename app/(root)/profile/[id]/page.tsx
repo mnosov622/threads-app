@@ -20,12 +20,12 @@ async function Page({ params }: { params: { id: string } }) {
   return (
     <section>
       <ProfileHeader
-        accountId={userInfo[0].id}
+        accountId={userInfo.id}
         authUserId={user.id}
-        name={userInfo[0].name}
-        username={userInfo[0].username}
-        imgUrl={userInfo[0].image}
-        bio={userInfo[0].bio}
+        name={userInfo.name}
+        username={userInfo.username}
+        imgUrl={userInfo.image}
+        bio={userInfo.bio}
       />
 
       <div className="mt-9">
@@ -44,7 +44,7 @@ async function Page({ params }: { params: { id: string } }) {
 
                 {tab.label === "Threads" && (
                   <p className="ml-1 rounded-sm bg-light-4 px-2 py-1 !text-tiny-medium text-light-2">
-                    {userInfo[0]?.threads?.length}
+                    {userInfo?.threads?.length}
                   </p>
                 )}
               </TabsTrigger>
@@ -57,7 +57,7 @@ async function Page({ params }: { params: { id: string } }) {
               className="w-full text-light-1"
             >
               {/* @ts-ignore */}
-              <ThreadsTab currentUserId={user.id} accountId={userInfo[0].id} accountType="User" />
+              <ThreadsTab currentUserId={user.id} accountId={userInfo.id} accountType="User" />
             </TabsContent>
           ))}
         </Tabs>
