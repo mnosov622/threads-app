@@ -12,8 +12,6 @@ async function Home({ searchParams }: { searchParams: { [key: string]: string | 
 
   const userInfo = await fetchUser(user.id);
 
-  console.log("userinfo", userInfo);
-
   if (!userInfo?.onboarded) {
     redirect("/onboarding");
   }

@@ -39,8 +39,6 @@ const ThreadCard = ({
   comments,
   isComment = false,
 }: Props) => {
-  console.log("auhtor", author);
-
   return (
     <article
       className={`flex w-full flex-col rounded ${isComment ? "px-0 xs:px-7" : "bg-dark-2 p-7"}`}
@@ -109,7 +107,7 @@ const ThreadCard = ({
         {/* TODO: Delete thread */}
       </div>
       {!isComment && community && (
-        <Link href={`/communties/${community.id}`} className="mt-5 flex flex-items-center">
+        <Link href={`/communities/${community.id}`} className="mt-5 flex flex-items-center">
           <p className="text-subtle-medium text-gray-1">
             {formatDateString(createdAt)} - {community.name} Community
           </p>
