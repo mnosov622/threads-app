@@ -32,7 +32,7 @@ function CommunityCard({ id, name, username, imgUrl, bio, members }: Props) {
 
       <p className="mt-4 text-subtle-medium text-gray-1">{bio}</p>
 
-      {members.length && (
+      {members.length > 2 && (
         <div className="flex items-center">
           {members.map((member, index) => (
             <Image
@@ -44,7 +44,7 @@ function CommunityCard({ id, name, username, imgUrl, bio, members }: Props) {
               className={`${index !== 0 && "-ml-2"} rounded-full object-cover`}
             />
           ))}
-          {members.length && (
+          {members.length > 2 && (
             <p className="ml-1 text-subtle-medium text-gray-1">{members.length}+ Users</p>
           )}
         </div>
