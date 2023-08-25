@@ -14,9 +14,9 @@ async function Home({ searchParams }: { searchParams: { [key: string]: string | 
 
   console.log("userinfo", userInfo);
 
-  // if (!userInfo[0]?.onboarded) {
-  //   redirect("/onboarding");
-  // }
+  if (!userInfo?.onboarded) {
+    redirect("/onboarding");
+  }
 
   const result = await fetchPosts(searchParams.page ? +searchParams.page : 1, 30);
 
