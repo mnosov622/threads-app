@@ -15,9 +15,9 @@ async function Page({ searchParams }: { searchParams: { [key: string]: string | 
   if (!user) return null;
 
   const userInfo = await fetchUser(user.id);
-  // if (!userInfo?[0].onboarded) redirect("/onboarding");
+  if (!userInfo?.onboarded) redirect("/onboarding");
 
-  const result = await fetchCommunities({
+  const result: any = await fetchCommunities({
     searchString: searchParams.q,
     pageNumber: searchParams?.page ? +searchParams.page : 1,
     pageSize: 25,

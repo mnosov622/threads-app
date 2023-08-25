@@ -32,30 +32,30 @@ function CommunityCard({ id, name, username, imgUrl, bio, members }: Props) {
 
       <p className="mt-4 text-subtle-medium text-gray-1">{bio}</p>
 
+      {members.length && (
+        <div className="flex items-center">
+          {members.map((member, index) => (
+            <Image
+              key={index}
+              src={member.image}
+              alt={`user_${index}`}
+              width={28}
+              height={28}
+              className={`${index !== 0 && "-ml-2"} rounded-full object-cover`}
+            />
+          ))}
+          {members.length && (
+            <p className="ml-1 text-subtle-medium text-gray-1">{members.length}+ Users</p>
+          )}
+        </div>
+      )}
+
       <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
         <Link href={`/communities/${id}`}>
           <Button size="sm" className="community-card_btn">
             View
           </Button>
         </Link>
-
-        {members.length > 0 && (
-          <div className="flex items-center">
-            {members.map((member, index) => (
-              <Image
-                key={index}
-                src={member.image}
-                alt={`user_${index}`}
-                width={28}
-                height={28}
-                className={`${index !== 0 && "-ml-2"} rounded-full object-cover`}
-              />
-            ))}
-            {members.length > 3 && (
-              <p className="ml-1 text-subtle-medium text-gray-1">{members.length}+ Users</p>
-            )}
-          </div>
-        )}
       </div>
     </article>
   );
