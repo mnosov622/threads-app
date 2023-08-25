@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { Input } from "../ui/input";
 
 interface Props {
-  routeType: string;
+  routeType?: string;
 }
 
 function Searchbar({ routeType }: Props) {
