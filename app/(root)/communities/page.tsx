@@ -8,6 +8,7 @@ import { currentUser } from "@clerk/nextjs";
 import UserCard from "@/components/cards/UserCard";
 import { fetchCommunities } from "@/lib/actions/community.actions";
 import { fetchUser } from "@/lib/actions/user.actions";
+import CommunityCard from "@/components/cards/CommunityCard";
 
 async function Page({ searchParams }: { searchParams: { [key: string]: string | undefined } }) {
   const user = await currentUser();
@@ -34,13 +35,14 @@ async function Page({ searchParams }: { searchParams: { [key: string]: string | 
         ) : (
           <>
             {result.communities.map((community) => (
-              <UserCard
+              <CommunityCard
                 key={community.id}
                 id={community.id}
                 name={community.name}
                 username={community.username}
                 imgUrl={community.image}
-                personType="User"
+                bio={community.bio}
+                members={community.members}
               />
             ))}
           </>
