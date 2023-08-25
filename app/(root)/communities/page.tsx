@@ -9,6 +9,8 @@ import UserCard from "@/components/cards/UserCard";
 import { fetchCommunities } from "@/lib/actions/community.actions";
 import { fetchUser } from "@/lib/actions/user.actions";
 import CommunityCard from "@/components/cards/CommunityCard";
+import Searchbar from "@/components/shared/Searchbar";
+import Pagination from "@/components/shared/Pagination";
 
 async function Page({ searchParams }: { searchParams: { [key: string]: string | undefined } }) {
   const user = await currentUser();
@@ -17,7 +19,7 @@ async function Page({ searchParams }: { searchParams: { [key: string]: string | 
   const userInfo = await fetchUser(user.id);
   if (!userInfo?.onboarded) redirect("/onboarding");
 
-  const result: any = await fetchCommunities({
+  const result = await fetchCommunities({
     searchString: searchParams.q,
     pageNumber: searchParams?.page ? +searchParams.page : 1,
     pageSize: 25,
@@ -27,7 +29,7 @@ async function Page({ searchParams }: { searchParams: { [key: string]: string | 
     <section>
       <h1 className="head-text mb-10">Communities</h1>
 
-      {/* <Searchbar routeType="search" /> */}
+      <Searchbar routeType="search" />
 
       <div className="mt-14 flex flex-col gap-9">
         {result.communities.length === 0 ? (
@@ -49,11 +51,11 @@ async function Page({ searchParams }: { searchParams: { [key: string]: string | 
         )}
       </div>
 
-      {/* <Pagination
+      <Pagination
         path="search"
         pageNumber={searchParams?.page ? +searchParams.page : 1}
         isNext={result.isNext}
-      /> */}
+      />
     </section>
   );
 }
