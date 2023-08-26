@@ -62,6 +62,7 @@ export async function createThread({ text, author, communityId, path }: Params) 
       text,
       author,
       community: communityIdObject,
+      likes: 0,
     });
 
     // Update User model
@@ -226,5 +227,26 @@ export async function addCommentToThread(
   } catch (err) {
     console.error("Error while adding comment:", err);
     throw new Error("Unable to add comment");
+  }
+}
+
+export async function addLikeToPost(threadId: string) {
+  connectToDB();
+
+  try {
+    const thread = await Thread.findById(threadId);
+
+    if (!thread) {
+      throw new Error("Thread not found");
+    }
+
+    // Increment the like count for the post
+    thread.likes += 1;
+
+    // Save the updated post to the database
+    await thread.save();
+  } catch (err) {
+    console.error("Error while adding like:", err);
+    throw new Error("Unable to add like to post");
   }
 }

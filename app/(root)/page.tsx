@@ -3,8 +3,10 @@ import { redirect } from "next/navigation";
 
 import ThreadCard from "@/components/cards/ThreadCard";
 
-import { fetchPosts } from "@/lib/actions/thread.actions";
+import { addLikeToPost, fetchPosts } from "@/lib/actions/thread.actions";
 import { fetchUser } from "@/lib/actions/user.actions";
+import { useEffect } from "react";
+import Image from "next/image";
 
 async function Home({ searchParams }: { searchParams: { [key: string]: string | undefined } }) {
   const user = await currentUser();
@@ -16,8 +18,10 @@ async function Home({ searchParams }: { searchParams: { [key: string]: string | 
     redirect("/onboarding");
   }
 
+  const handleLikeThread = (threadId: string) => async () => {
+    addLikeToPost(threadId);
+  };
   const result = await fetchPosts(searchParams.page ? +searchParams.page : 1, 30);
-
   return (
     <>
       <h1 className="head-text text-left">Home</h1>
@@ -38,6 +42,7 @@ async function Home({ searchParams }: { searchParams: { [key: string]: string | 
                 community={post.community}
                 createdAt={post.createdAt}
                 comments={post.children}
+                likes={post.likes}
               />
             ))}
           </>

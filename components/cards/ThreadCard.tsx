@@ -1,6 +1,8 @@
 import { formatDateString } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
+import React from "react";
+import LikeThread from "../forms/LikeThread";
 
 interface Props {
   key: string;
@@ -24,6 +26,7 @@ interface Props {
       image: string;
     };
   }[];
+  likes: number | any;
   isComment?: boolean;
 }
 
@@ -37,8 +40,13 @@ const ThreadCard = ({
   community,
   createdAt,
   comments,
+  likes,
   isComment = false,
 }: Props) => {
+  const handleLikeThread = (threadId: string) => () => {
+    console.log("Like thread", threadId);
+  };
+
   return (
     <article
       className={`flex w-full flex-col rounded ${isComment ? "px-0 xs:px-7" : "bg-dark-2 p-7"}`}
@@ -64,13 +72,12 @@ const ThreadCard = ({
             <p className="mt-2 text-small-regular text-light-2">{content}</p>
             <div className="mt-5 flex flex-col gap-3">
               <div className="flex gap-3.5">
-                <Image
-                  src="/assets/heart-gray.svg"
-                  alt="Heart"
-                  width={24}
-                  height={24}
-                  className="cursor-pointer object-contain"
-                />
+                <div
+                  className="flex items-center
+                 flex-col"
+                >
+                  <LikeThread likes={likes} threadId={id} userId={currentUserId} />
+                </div>
                 <Link href={`/thread/${id}`}>
                   <Image
                     src="/assets/reply.svg"
@@ -80,7 +87,7 @@ const ThreadCard = ({
                     className="cursor-pointer object-contain"
                   />
                 </Link>
-                <Image
+                {/* <Image
                   src="/assets/repost.svg"
                   alt="Repost"
                   width={24}
@@ -93,7 +100,7 @@ const ThreadCard = ({
                   width={24}
                   height={24}
                   className="cursor-pointer object-contain"
-                />
+                /> */}
               </div>
               {isComment && comments.length > 0 && (
                 <Link href={`/thread/${id}`}>
