@@ -76,7 +76,7 @@ const ThreadCard = async ({
               <h2 className="cursor-pointer text-base-semibold text-light-1">{author?.name}</h2>
             </Link>
             <p className="mt-2 text-small-regular text-light-2">{content}</p>
-            <div className="mt-5 flex flex-row gap-3">
+            <div className="mt-5 flex flex-row gap-3 items-center">
               {homePage && (
                 <div className="flex gap-3.5">
                   <LikeThread
@@ -85,7 +85,7 @@ const ThreadCard = async ({
                     userId={userInfo?._id}
                     usersLiked={usersLiked}
                   />
-                  <Link href={`/thread/${id}`}>
+                  <Link href={`/thread/${id}`} className="flex flex-row">
                     <Image
                       src="/assets/reply.svg"
                       alt="Reply"
@@ -93,10 +93,11 @@ const ThreadCard = async ({
                       height={24}
                       className="cursor-pointer object-contain"
                     />
+                    <p className="text-light-2">{comments.length}</p>
                   </Link>
+                  <Share threadContent={content} id={id} />
                 </div>
               )}
-              <Share threadContent={content} id={id} />
 
               {userInfo.threads.includes(id) && <DeleteThread threadId={id} />}
 

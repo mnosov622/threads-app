@@ -44,7 +44,7 @@ const LikeThread = ({ likes, threadId, userId, usersLiked, homePage }: Props) =>
     <>
       <div
         className="flex items-center
-                 flex-col"
+                 flex-row"
       >
         {!userLiked ? (
           <Image
