@@ -31,7 +31,7 @@ async function Page({ searchParams }: { searchParams: { [key: string]: string | 
 
       <Searchbar routeType="communities" />
 
-      <div className="mt-14 flex flex-col gap-9">
+      <div className="mt-14 flex flex-row gap-9 flex-wrap">
         {result.communities.length === 0 ? (
           <p className="no-result">No Result</p>
         ) : (
