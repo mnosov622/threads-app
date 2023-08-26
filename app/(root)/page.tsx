@@ -1,3 +1,5 @@
+"use server";
+
 import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
@@ -19,6 +21,10 @@ async function Home({ searchParams }: { searchParams: { [key: string]: string | 
   }
 
   const result = await fetchPosts(searchParams.page ? +searchParams.page : 1, 30);
+
+  const handleUpdateThreads = () => {
+    fetchPosts(searchParams.page ? +searchParams.page : 1, 30);
+  };
 
   return (
     <>

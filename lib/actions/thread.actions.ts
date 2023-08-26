@@ -282,7 +282,16 @@ export async function removeLikeFromPost(threadId: string, userId: string) {
     // Save the updated post to the database
     await thread.save();
   } catch (err) {
-    console.error("Error while removing like:", err);
     throw new Error("Unable to remove like from post");
+  }
+}
+
+export async function deleteThreadById(threadId: string) {
+  try {
+    connectToDB();
+
+    await Thread.findByIdAndDelete(threadId);
+  } catch (e) {
+    throw new Error("Unable to delete a post");
   }
 }

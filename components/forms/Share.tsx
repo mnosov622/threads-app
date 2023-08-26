@@ -17,7 +17,6 @@ const Share = ({ threadContent, id }: Props) => {
           text: threadContent,
           url: `${window.location.origin}/thread/${id}`,
         });
-        console.log("Shared successfully");
       } catch (error) {
         console.error("Error sharing:", error);
       }

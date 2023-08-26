@@ -6,6 +6,7 @@ import LikeThread from "../forms/LikeThread";
 import { fetchUser } from "@/lib/actions/user.actions";
 import { useRouter } from "next/router";
 import Share from "../forms/Share";
+import DeleteThread from "../forms/DeleteThread";
 
 interface Props {
   key: string;
@@ -29,10 +30,10 @@ interface Props {
       image: string;
     };
   }[];
-  likes: number | any;
-  usersLiked: any;
+  likes?: number | any;
+  usersLiked?: any;
   isComment?: boolean;
-  homePage: boolean;
+  homePage?: boolean;
 }
 
 const ThreadCard = async ({
@@ -96,6 +97,9 @@ const ThreadCard = async ({
                 </div>
               )}
               <Share threadContent={content} id={id} />
+
+              {userInfo.threads.includes(id) && <DeleteThread threadId={id} />}
+
               {isComment && comments.length > 0 && (
                 <Link href={`/thread/${id}`}>
                   <p className="mt-1 text-subtle-medium text-gray-1">{comments.length} replies</p>
@@ -104,8 +108,6 @@ const ThreadCard = async ({
             </div>
           </div>
         </div>
-
-        {/* TODO: Delete thread */}
       </div>
       {!isComment && community && (
         <Link href={`/communities/${community.id}`} className="mt-5 flex flex-items-center">
