@@ -46,10 +46,6 @@ const ThreadCard = async ({
   usersLiked,
   isComment = false,
 }: Props) => {
-  const handleLikeThread = (threadId: string) => () => {
-    console.log("Like thread", threadId);
-  };
-
   const userInfo = await fetchUser(currentUserId);
   return (
     <article
@@ -76,17 +72,12 @@ const ThreadCard = async ({
             <p className="mt-2 text-small-regular text-light-2">{content}</p>
             <div className="mt-5 flex flex-col gap-3">
               <div className="flex gap-3.5">
-                <div
-                  className="flex items-center
-                 flex-col"
-                >
-                  <LikeThread
-                    likes={likes}
-                    threadId={id}
-                    userId={userInfo._id}
-                    usersLiked={usersLiked}
-                  />
-                </div>
+                <LikeThread
+                  likes={likes}
+                  threadId={id}
+                  userId={userInfo._id}
+                  usersLiked={usersLiked}
+                />
                 <Link href={`/thread/${id}`}>
                   <Image
                     src="/assets/reply.svg"

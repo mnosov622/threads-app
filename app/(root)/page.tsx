@@ -20,7 +20,6 @@ async function Home({ searchParams }: { searchParams: { [key: string]: string | 
 
   const result = await fetchPosts(searchParams.page ? +searchParams.page : 1, 30);
 
-  console.log("result", result);
   return (
     <>
       <h1 className="head-text text-left">Home</h1>

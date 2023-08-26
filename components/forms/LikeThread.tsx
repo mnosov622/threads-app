@@ -52,7 +52,7 @@ const LikeThread = ({ likes, threadId, userId, noLikes, usersLiked }: Props) => 
           className={`cursor-pointer object-contain ${userLiked && "liked"}`}
           onClick={handleLikeThread(threadId)}
         />
-        {likesAmount > 0 && <p className="text-light-2">{likesAmount}</p>}
+        <p className="text-light-2">{likesAmount}</p>
       </div>
     </>
   );
