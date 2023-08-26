@@ -27,7 +27,7 @@ interface Props {
 }
 
 function PostThread({ userId }: Props) {
-  const [loading, setIsLoading] = useState(true);
+  const [loading, setIsLoading] = useState(false);
 
   const router = useRouter();
   const pathname = usePathname();
@@ -44,14 +44,20 @@ function PostThread({ userId }: Props) {
 
   const onSubmit = async (values: z.infer<typeof ThreadValidation>) => {
     setIsLoading(true);
-    await createThread({
-      text: values.thread,
-      author: userId,
-      communityId: organization ? organization.id : null,
-      path: pathname,
-    });
-    setIsLoading(false);
-    router.push("/");
+    try {
+      await createThread({
+        text: values.thread,
+        author: userId,
+        communityId: organization ? organization.id : null,
+        path: pathname,
+      });
+      // Navigate to the desired page
+      router.push("/");
+    } catch (error) {
+      console.error("Error creating thread:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
