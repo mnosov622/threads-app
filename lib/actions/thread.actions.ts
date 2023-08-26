@@ -240,13 +240,49 @@ export async function addLikeToPost(threadId: string, userId: string) {
       throw new Error("Thread not found");
     }
 
+    if (!thread.usersLiked) {
+      thread.usersLiked = [];
+    }
+
+    // Check if the user has already liked the post
+
     // Increment the like count for the post
     thread.likes += 1;
-    // thread.usersLiked.push(userId);
+    thread.usersLiked.push(userId.toString());
+    console.log("thread", thread);
     // Save the updated post to the database
     await thread.save();
   } catch (err) {
     console.error("Error while adding like:", err);
     throw new Error("Unable to add like to post");
+  }
+}
+
+export async function removeLikeFromPost(threadId: string, userId: string) {
+  connectToDB();
+
+  try {
+    const thread = await Thread.findById(threadId);
+
+    if (!thread) {
+      throw new Error("Thread not found");
+    }
+
+    // Check if the user has already liked the post
+    const userIndex = thread.usersLiked.indexOf(userId);
+
+    // Decrement the like count for the post
+    thread.likes -= 1;
+
+    // Remove the userId from usersLiked array
+    thread.usersLiked.splice(userIndex, 1);
+
+    console.log("thread", thread);
+
+    // Save the updated post to the database
+    await thread.save();
+  } catch (err) {
+    console.error("Error while removing like:", err);
+    throw new Error("Unable to remove like from post");
   }
 }

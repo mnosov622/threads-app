@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import LikeThread from "../forms/LikeThread";
+import { fetchUser } from "@/lib/actions/user.actions";
 
 interface Props {
   key: string;
@@ -27,10 +28,11 @@ interface Props {
     };
   }[];
   likes: number | any;
+  usersLiked: any;
   isComment?: boolean;
 }
 
-const ThreadCard = ({
+const ThreadCard = async ({
   key,
   id,
   currentUserId,
@@ -41,12 +43,14 @@ const ThreadCard = ({
   createdAt,
   comments,
   likes,
+  usersLiked,
   isComment = false,
 }: Props) => {
   const handleLikeThread = (threadId: string) => () => {
     console.log("Like thread", threadId);
   };
 
+  const userInfo = await fetchUser(currentUserId);
   return (
     <article
       className={`flex w-full flex-col rounded ${isComment ? "px-0 xs:px-7" : "bg-dark-2 p-7"}`}
@@ -76,7 +80,12 @@ const ThreadCard = ({
                   className="flex items-center
                  flex-col"
                 >
-                  <LikeThread likes={likes} threadId={id} userId={currentUserId} />
+                  <LikeThread
+                    likes={likes}
+                    threadId={id}
+                    userId={userInfo._id}
+                    usersLiked={usersLiked}
+                  />
                 </div>
                 <Link href={`/thread/${id}`}>
                   <Image

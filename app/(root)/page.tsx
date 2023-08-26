@@ -18,10 +18,9 @@ async function Home({ searchParams }: { searchParams: { [key: string]: string | 
     redirect("/onboarding");
   }
 
-  const handleLikeThread = (threadId: string) => async () => {
-    addLikeToPost(threadId);
-  };
   const result = await fetchPosts(searchParams.page ? +searchParams.page : 1, 30);
+
+  console.log("result", result);
   return (
     <>
       <h1 className="head-text text-left">Home</h1>
@@ -43,6 +42,7 @@ async function Home({ searchParams }: { searchParams: { [key: string]: string | 
                 createdAt={post.createdAt}
                 comments={post.children}
                 likes={post.likes}
+                usersLiked={post.usersLiked}
               />
             ))}
           </>
