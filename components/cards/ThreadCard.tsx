@@ -5,6 +5,7 @@ import React from "react";
 import LikeThread from "../forms/LikeThread";
 import { fetchUser } from "@/lib/actions/user.actions";
 import { useRouter } from "next/router";
+import Share from "../forms/Share";
 
 interface Props {
   key: string;
@@ -74,7 +75,7 @@ const ThreadCard = async ({
               <h2 className="cursor-pointer text-base-semibold text-light-1">{author?.name}</h2>
             </Link>
             <p className="mt-2 text-small-regular text-light-2">{content}</p>
-            <div className="mt-5 flex flex-col gap-3">
+            <div className="mt-5 flex flex-row gap-3">
               {homePage && (
                 <div className="flex gap-3.5">
                   <LikeThread
@@ -94,7 +95,7 @@ const ThreadCard = async ({
                   </Link>
                 </div>
               )}
-
+              <Share threadContent={content} id={id} />
               {isComment && comments.length > 0 && (
                 <Link href={`/thread/${id}`}>
                   <p className="mt-1 text-subtle-medium text-gray-1">{comments.length} replies</p>
