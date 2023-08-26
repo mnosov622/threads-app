@@ -19,13 +19,16 @@ import { Textarea } from "@/components/ui/textarea";
 
 import { ThreadValidation } from "@/lib/validations/thread";
 import { createThread } from "@/lib/actions/thread.actions";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import Loader from "../shared/Loader";
 
 interface Props {
   userId: string;
 }
 
 function PostThread({ userId }: Props) {
+  const [loading, setIsLoading] = useState(true);
+
   const router = useRouter();
   const pathname = usePathname();
 
@@ -40,13 +43,14 @@ function PostThread({ userId }: Props) {
   });
 
   const onSubmit = async (values: z.infer<typeof ThreadValidation>) => {
+    setIsLoading(true);
     await createThread({
       text: values.thread,
       author: userId,
       communityId: organization ? organization.id : null,
       path: pathname,
     });
-
+    setIsLoading(false);
     router.push("/");
   };
 
@@ -71,7 +75,7 @@ function PostThread({ userId }: Props) {
         />
 
         <Button type="submit" className="bg-primary-500">
-          Post Thread
+          {loading ? <Loader /> : "Post Thread"}
         </Button>
       </form>
     </Form>
