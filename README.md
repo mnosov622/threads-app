@@ -1,4 +1,4 @@
-Discover My Next.js 13 Project:
+<b>Discover My Next.js 13 Project:<b>
 
 🌟 Create and share engaging threads
 
