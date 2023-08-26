@@ -58,9 +58,9 @@ const ThreadCard = async ({
       <div className="flex items-start justify-between">
         <div className="flex w-full flex-1 flex-row gap-4">
           <div className="flex flex-col items-center">
-            <Link href={`/profile/${author.id}`} className="relative h-11 w-11">
+            <Link href={`/profile/${author?.id}`} className="relative h-11 w-11">
               <Image
-                src={author.image}
+                src={author?.image}
                 alt="Profile image"
                 fill
                 className="cursor-pointer rounded full"
@@ -70,8 +70,8 @@ const ThreadCard = async ({
           </div>
 
           <div className="flex w-full flex-col">
-            <Link href={`/profile/${author.id}`} className="w-fit">
-              <h2 className="cursor-pointer text-base-semibold text-light-1">{author.name}</h2>
+            <Link href={`/profile/${author?.id}`} className="w-fit">
+              <h2 className="cursor-pointer text-base-semibold text-light-1">{author?.name}</h2>
             </Link>
             <p className="mt-2 text-small-regular text-light-2">{content}</p>
             <div className="mt-5 flex flex-col gap-3">
@@ -80,7 +80,7 @@ const ThreadCard = async ({
                   <LikeThread
                     likes={likes}
                     threadId={id}
-                    userId={userInfo._id}
+                    userId={userInfo?._id}
                     usersLiked={usersLiked}
                   />
                   <Link href={`/thread/${id}`}>

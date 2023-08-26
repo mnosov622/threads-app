@@ -17,7 +17,7 @@ async function Page() {
     userName: userInfo ? userInfo?.userName : user?.username,
     name: userInfo ? userInfo.name : user?.firstName || "",
     bio: userInfo ? userInfo.bio : "",
-    image: userInfo ? userInfo?.image : user.imageUrl,
+    image: userInfo ? userInfo?.image : user.imageUrl || "",
   };
 
   return (
