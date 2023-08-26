@@ -46,14 +46,26 @@ const LikeThread = ({ likes, threadId, userId, usersLiked, homePage }: Props) =>
         className="flex items-center
                  flex-col"
       >
-        <Image
-          src="/assets/heart-gray.svg"
-          alt="Heart"
-          width={24}
-          height={24}
-          className={`cursor-pointer object-contain ${userLiked && "liked"}`}
-          onClick={handleLikeThread(threadId)}
-        />
+        {!userLiked ? (
+          <Image
+            src="/assets/heart-gray.svg"
+            alt="Heart"
+            width={24}
+            height={24}
+            className={`cursor-pointer object-contain`}
+            onClick={handleLikeThread(threadId)}
+          />
+        ) : (
+          <Image
+            src="/assets/heart-filled.svg"
+            alt="Heart"
+            width={24}
+            height={24}
+            className={`cursor-pointer object-contain`}
+            onClick={handleLikeThread(threadId)}
+          />
+        )}
+
         <p className="text-light-2">{likesAmount}</p>
       </div>
     </>
