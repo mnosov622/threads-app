@@ -42,6 +42,7 @@ async function Home({ searchParams }: { searchParams: { [key: string]: string | 
                 comments={post.children}
                 likes={post.likes}
                 usersLiked={post.usersLiked}
+                homePage={true}
               />
             ))}
           </>

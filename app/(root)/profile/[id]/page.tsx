@@ -58,6 +58,12 @@ async function Page({ params }: { params: { id: string } }) {
             >
               {/* @ts-ignore */}
               <ThreadsTab currentUserId={user.id} accountId={userInfo.id} accountType="User" />
+              {/* <LikeThread
+                  likes={likes}
+                  threadId={id}
+                  userId={userInfo._id}
+                  usersLiked={usersLiked}
+                /> */}
             </TabsContent>
           ))}
         </Tabs>

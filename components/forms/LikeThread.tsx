@@ -2,6 +2,7 @@
 
 import { addLikeToPost, fetchPosts, removeLikeFromPost } from "@/lib/actions/thread.actions";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 
 interface Props {
@@ -10,9 +11,10 @@ interface Props {
   userId: string;
   noLikes?: string;
   usersLiked?: string[];
+  homePage?: string;
 }
 
-const LikeThread = ({ likes, threadId, userId, noLikes, usersLiked }: Props) => {
+const LikeThread = ({ likes, threadId, userId, usersLiked, homePage }: Props) => {
   const [likesAmount, setLikesAmount] = useState(likes);
   const [userLiked, setUserLiked] = useState(false);
 

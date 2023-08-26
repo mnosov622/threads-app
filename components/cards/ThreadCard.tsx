@@ -4,6 +4,7 @@ import Link from "next/link";
 import React from "react";
 import LikeThread from "../forms/LikeThread";
 import { fetchUser } from "@/lib/actions/user.actions";
+import { useRouter } from "next/router";
 
 interface Props {
   key: string;
@@ -30,6 +31,7 @@ interface Props {
   likes: number | any;
   usersLiked: any;
   isComment?: boolean;
+  homePage: boolean;
 }
 
 const ThreadCard = async ({
@@ -45,8 +47,10 @@ const ThreadCard = async ({
   likes,
   usersLiked,
   isComment = false,
+  homePage = false,
 }: Props) => {
   const userInfo = await fetchUser(currentUserId);
+
   return (
     <article
       className={`flex w-full flex-col rounded ${isComment ? "px-0 xs:px-7" : "bg-dark-2 p-7"}`}
@@ -71,37 +75,26 @@ const ThreadCard = async ({
             </Link>
             <p className="mt-2 text-small-regular text-light-2">{content}</p>
             <div className="mt-5 flex flex-col gap-3">
-              <div className="flex gap-3.5">
-                <LikeThread
-                  likes={likes}
-                  threadId={id}
-                  userId={userInfo._id}
-                  usersLiked={usersLiked}
-                />
-                <Link href={`/thread/${id}`}>
-                  <Image
-                    src="/assets/reply.svg"
-                    alt="Reply"
-                    width={24}
-                    height={24}
-                    className="cursor-pointer object-contain"
+              {homePage && (
+                <div className="flex gap-3.5">
+                  <LikeThread
+                    likes={likes}
+                    threadId={id}
+                    userId={userInfo._id}
+                    usersLiked={usersLiked}
                   />
-                </Link>
-                {/* <Image
-                  src="/assets/repost.svg"
-                  alt="Repost"
-                  width={24}
-                  height={24}
-                  className="cursor-pointer object-contain"
-                />
-                <Image
-                  src="/assets/share.svg"
-                  alt="Share"
-                  width={24}
-                  height={24}
-                  className="cursor-pointer object-contain"
-                /> */}
-              </div>
+                  <Link href={`/thread/${id}`}>
+                    <Image
+                      src="/assets/reply.svg"
+                      alt="Reply"
+                      width={24}
+                      height={24}
+                      className="cursor-pointer object-contain"
+                    />
+                  </Link>
+                </div>
+              )}
+
               {isComment && comments.length > 0 && (
                 <Link href={`/thread/${id}`}>
                   <p className="mt-1 text-subtle-medium text-gray-1">{comments.length} replies</p>
