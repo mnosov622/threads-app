@@ -14,6 +14,11 @@ const threadSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  usersLiked: {
+    type: [mongoose.Schema.Types.ObjectId], // Specify the type as an array of ObjectIds
+    default: [], // Initialize as an empty array
+    unique: true, // Ensure unique user IDs in the array
+  },
   community: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Community",

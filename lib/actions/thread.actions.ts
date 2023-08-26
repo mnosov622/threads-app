@@ -230,7 +230,7 @@ export async function addCommentToThread(
   }
 }
 
-export async function addLikeToPost(threadId: string) {
+export async function addLikeToPost(threadId: string, userId: string) {
   connectToDB();
 
   try {
@@ -242,7 +242,7 @@ export async function addLikeToPost(threadId: string) {
 
     // Increment the like count for the post
     thread.likes += 1;
-
+    // thread.usersLiked.push(userId);
     // Save the updated post to the database
     await thread.save();
   } catch (err) {
