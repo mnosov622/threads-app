@@ -295,3 +295,16 @@ export async function deleteThreadById(threadId: string) {
     throw new Error("Unable to delete a post");
   }
 }
+
+export async function updateThreadById(threadId: string, text: string, path: string) {
+  try {
+    connectToDB();
+
+    await Thread.findByIdAndUpdate(threadId, { text });
+
+    console.log("function call");
+    revalidatePath(path);
+  } catch (e) {
+    throw new Error("Unable to update a post");
+  }
+}

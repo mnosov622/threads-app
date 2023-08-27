@@ -7,6 +7,7 @@ import { fetchUser } from "@/lib/actions/user.actions";
 import { useRouter } from "next/router";
 import Share from "../forms/Share";
 import DeleteThread from "../forms/DeleteThread";
+import EditThread from "../forms/EditThread";
 
 interface Props {
   key: string;
@@ -100,6 +101,20 @@ const ThreadCard = async ({
               )}
 
               {userInfo.threads.includes(id) && <DeleteThread threadId={id} />}
+
+              {userInfo.threads.includes(id) && (
+                <>
+                  <Link href={`/thread/edit/${id}`} className="flex flex-row">
+                    <Image
+                      src="/assets/edit.svg"
+                      alt="Reply"
+                      width={20}
+                      height={20}
+                      className="cursor-pointer object-contain"
+                    />
+                  </Link>
+                </>
+              )}
 
               {isComment && comments.length > 0 && (
                 <Link href={`/thread/${id}`}>
