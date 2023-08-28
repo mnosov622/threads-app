@@ -9,6 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { fetchUser } from "@/lib/actions/user.actions";
 import ThreadsTab from "@/components/shared/ThreadsTab";
+import { Button } from "@/components/ui/button";
 
 async function Page({ params }: { params: { id: string } }) {
   const user = await currentUser();
