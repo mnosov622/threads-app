@@ -24,6 +24,7 @@ import { isBase64Image } from "@/lib/utils";
 import { fetchUser, updateUser } from "@/lib/actions/user.actions";
 import { usePathname, useRouter } from "next/navigation";
 import { currentUser } from "@clerk/nextjs";
+import Loader from "@/components/shared/Loader";
 
 interface Props {
   name: string;
@@ -35,6 +36,8 @@ interface Props {
 
 const EditProfile = ({ name, image, bio, username, id }: Props) => {
   const [files, setFiles] = useState<File[]>([]);
+  const [loading, setIsLoading] = useState<Boolean>(false);
+
   const { startUpload } = useUploadThing("media");
   const router = useRouter();
   const pathname = usePathname();
@@ -50,7 +53,7 @@ const EditProfile = ({ name, image, bio, username, id }: Props) => {
   });
 
   async function onSubmit(values: z.infer<typeof UserValidation>) {
-    console.log(values);
+    setIsLoading(true);
 
     const blob = values.profile_photo;
 
@@ -72,7 +75,7 @@ const EditProfile = ({ name, image, bio, username, id }: Props) => {
       image: values.profile_photo,
       path: pathname,
     });
-
+    setIsLoading(false);
     window.location.reload();
   }
 
@@ -180,7 +183,7 @@ const EditProfile = ({ name, image, bio, username, id }: Props) => {
         />
 
         <Button type="submit" className="bg-primary-500">
-          Save Changes
+          {loading ? <Loader /> : "Save Changes"}
         </Button>
       </form>
     </Form>
