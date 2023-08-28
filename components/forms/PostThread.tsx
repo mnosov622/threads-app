@@ -19,8 +19,12 @@ import { Textarea } from "@/components/ui/textarea";
 
 import { ThreadValidation } from "@/lib/validations/thread";
 import { createThread } from "@/lib/actions/thread.actions";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import Loader from "../shared/Loader";
+import { useUploadThing } from "@/lib/uploadthing";
+import { isBase64Image } from "@/lib/utils";
+import { Input } from "../ui/input";
+import Image from "next/image";
 
 interface Props {
   userId: string;
@@ -28,6 +32,8 @@ interface Props {
 
 function PostThread({ userId }: Props) {
   const [loading, setIsLoading] = useState(false);
+  const [files, setFiles] = useState<File[]>([]);
+  const { startUpload } = useUploadThing("media");
 
   const router = useRouter();
   const pathname = usePathname();
@@ -44,12 +50,25 @@ function PostThread({ userId }: Props) {
 
   const onSubmit = async (values: z.infer<typeof ThreadValidation>) => {
     setIsLoading(true);
+    const blob: any = values.image;
+
+    const hasImageChanged = isBase64Image(blob);
+
+    if (hasImageChanged) {
+      const imgRes = await startUpload(files);
+
+      if (imgRes && imgRes[0].fileUrl) {
+        values.image = imgRes[0].fileUrl;
+      }
+    }
+
     try {
       await createThread({
         text: values.thread,
         author: userId,
         communityId: organization ? organization.id : null,
         path: pathname,
+        image: values.image,
       });
       // Navigate to the desired page
       router.push("/");
@@ -59,6 +78,26 @@ function PostThread({ userId }: Props) {
       setIsLoading(false);
     }
   };
+
+  function handleImage(e: ChangeEvent<HTMLInputElement>, fieldChange: (value: string) => void) {
+    e.preventDefault();
+
+    const fileReader = new FileReader();
+
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
+      setFiles(Array.from(e.target.files));
+      if (!file.type.includes("image")) {
+        return;
+      }
+      fileReader.onload = async (e) => {
+        const imageDataUrl = e.target?.result?.toString() || "";
+        fieldChange(imageDataUrl);
+      };
+
+      fileReader.readAsDataURL(file);
+    }
+  }
 
   return (
     <Form {...form}>
@@ -75,6 +114,36 @@ function PostThread({ userId }: Props) {
               <FormControl className="no-focus border border-dark-4 bg-dark-3 text-light-1">
                 <Textarea rows={15} {...field} />
               </FormControl>
+              <FormField
+                control={form.control}
+                name="image"
+                render={({ field }) => (
+                  <FormItem className="flex items-center gap-4">
+                    <FormLabel className="account-form_image-label">
+                      {field.value && (
+                        <Image
+                          src={field.value}
+                          alt="profile photo"
+                          width={96}
+                          height={96}
+                          priority
+                          className="rounded-full object-contain"
+                        />
+                      )}
+                    </FormLabel>
+                    <FormControl className="flex-1 text-base-semibold text-gray-200">
+                      <Input
+                        type="file"
+                        accept="image/*"
+                        placeholder="Upload a photo"
+                        className="account-form_image-input"
+                        onChange={(e) => handleImage(e, field.onChange)}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
               <FormMessage />
             </FormItem>
           )}

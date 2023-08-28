@@ -50,9 +50,10 @@ interface Params {
   author: string;
   communityId: string | null;
   path: string;
+  image?: string;
 }
 
-export async function createThread({ text, author, communityId, path }: Params) {
+export async function createThread({ text, author, communityId, path, image }: Params) {
   try {
     connectToDB();
 
@@ -63,6 +64,7 @@ export async function createThread({ text, author, communityId, path }: Params) 
       author,
       community: communityIdObject,
       likes: 0,
+      image,
     });
 
     // Update User model
