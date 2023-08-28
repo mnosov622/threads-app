@@ -35,6 +35,8 @@ interface Props {
   usersLiked?: any;
   isComment?: boolean;
   homePage?: boolean;
+  image?: string | any;
+  thread: any;
 }
 
 const ThreadCard = async ({
@@ -51,9 +53,10 @@ const ThreadCard = async ({
   usersLiked,
   isComment = false,
   homePage = false,
+  image,
+  thread,
 }: Props) => {
   const userInfo = await fetchUser(currentUserId);
-
   return (
     <article
       className={`flex w-full flex-col rounded ${isComment ? "px-0 xs:px-7" : "bg-dark-2 p-7"}`}
@@ -77,6 +80,15 @@ const ThreadCard = async ({
               <h2 className="cursor-pointer text-base-semibold text-light-1">{author?.name}</h2>
             </Link>
             <p className="mt-2 text-small-regular text-light-2">{content}</p>
+            {image && (
+              <Image
+                src={image}
+                alt="Thread Image"
+                width={24}
+                height={24}
+                className="cursor-pointer object-contain"
+              />
+            )}
             <div className="mt-5 flex flex-row gap-3 items-center">
               {homePage && (
                 <div className="flex gap-3.5">
