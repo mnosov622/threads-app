@@ -17,7 +17,7 @@ interface Props {
   authorizedUser?: boolean;
 }
 
-const ProfileHeader = async ({
+const ProfileHeader = ({
   accountId,
   authUserId,
   name,
