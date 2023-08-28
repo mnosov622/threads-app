@@ -83,8 +83,8 @@ const ThreadCard = async ({
                 <Image
                   src={image}
                   alt="Thread Image"
-                  width={50}
-                  height={50}
+                  width={100}
+                  height={100}
                   className="cursor-pointer object-contain"
                 />
               </div>
