@@ -4,18 +4,29 @@ import { Button } from "../ui/button";
 import Link from "next/link";
 import EditProfile from "@/app/(root)/profile/[id]/[edit]/page";
 import { useState } from "react";
+import { fetchUsers } from "@/lib/actions/user.actions";
 
 interface Props {
-  accountId: string;
+  accountId: string | any;
   authUserId: string;
   name: string;
   username: string;
   imgUrl: string;
   bio: string;
   type?: string | "Community";
+  authorizedUser?: boolean;
 }
 
-const ProfileHeader = ({ accountId, authUserId, name, username, imgUrl, bio, type }: Props) => {
+const ProfileHeader = async ({
+  accountId,
+  authUserId,
+  name,
+  username,
+  imgUrl,
+  bio,
+  type,
+  authorizedUser,
+}: Props) => {
   const [showEditProfile, setShowEditProfile] = useState(false);
 
   return (
@@ -42,16 +53,21 @@ const ProfileHeader = ({ accountId, authUserId, name, username, imgUrl, bio, typ
           <p className="mt-6 max-w-lg text-base-regular text-light-2">{bio}</p>
         </>
       )}
-      <Button
-        className="bg-primary-500 mt-5 mb-5"
-        onClick={() => setShowEditProfile(!showEditProfile)}
-      >
-        {showEditProfile ? "Cancel" : "Edit Profile"}
-      </Button>
 
-      {showEditProfile && (
-        <EditProfile image={imgUrl} name={name} bio={bio} username={username} id={accountId} />
-      )}
+      <>
+        {authorizedUser && (
+          <Button
+            className="bg-primary-500 mt-5 mb-5"
+            onClick={() => setShowEditProfile(!showEditProfile)}
+          >
+            {showEditProfile ? "Cancel" : "Edit Profile"}
+          </Button>
+        )}
+
+        {showEditProfile && (
+          <EditProfile image={imgUrl} name={name} bio={bio} username={username} id={accountId} />
+        )}
+      </>
 
       <div className="mt-12 h-0.5 w-full bg-dark-3" />
     </div>

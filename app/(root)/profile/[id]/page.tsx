@@ -17,6 +17,7 @@ async function Page({ params }: { params: { id: string } }) {
 
   const userInfo = await fetchUser(params.id);
   if (!userInfo?.onboarded) redirect("/onboarding");
+  const authorizedUser = user.id === userInfo.id;
 
   return (
     <section>
@@ -27,6 +28,7 @@ async function Page({ params }: { params: { id: string } }) {
         username={userInfo.username}
         imgUrl={userInfo.image}
         bio={userInfo.bio}
+        authorizedUser={authorizedUser}
       />
 
       <div className="mt-9">
