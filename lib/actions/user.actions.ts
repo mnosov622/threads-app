@@ -41,7 +41,6 @@ export async function updateUser({
 }: Params): Promise<void> {
   try {
     connectToDB();
-
     await User.findOneAndUpdate(
       { id: userId },
       {
@@ -53,10 +52,6 @@ export async function updateUser({
       },
       { upsert: true }
     );
-
-    if (path === "/profile/edit") {
-      revalidatePath(path);
-    }
   } catch (error: any) {
     throw new Error(`Failed to create/update user: ${error.message}`);
   }
