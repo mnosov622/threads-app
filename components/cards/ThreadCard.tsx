@@ -79,13 +79,15 @@ const ThreadCard = async ({
             </Link>
             <p className="mt-2 text-small-regular text-light-2">{content}</p>
             {image && (
-              <Image
-                src={image}
-                alt="Thread Image"
-                width={24}
-                height={24}
-                className="cursor-pointer object-contain"
-              />
+              <div className="mt-2">
+                <Image
+                  src={image}
+                  alt="Thread Image"
+                  width={50}
+                  height={50}
+                  className="cursor-pointer object-contain"
+                />
+              </div>
             )}
             <div className="mt-5 flex flex-row gap-3 items-center">
               {homePage && (
