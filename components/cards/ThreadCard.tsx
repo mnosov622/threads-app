@@ -36,7 +36,6 @@ interface Props {
   isComment?: boolean;
   homePage?: boolean;
   image?: string | any;
-  thread: any;
 }
 
 const ThreadCard = async ({
@@ -54,7 +53,6 @@ const ThreadCard = async ({
   isComment = false,
   homePage = false,
   image,
-  thread,
 }: Props) => {
   const userInfo = await fetchUser(currentUserId);
   return (
