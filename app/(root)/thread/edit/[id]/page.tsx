@@ -25,7 +25,7 @@ async function page({ params }: { params: { id: string } }) {
     <section className="relative">
       <h1 className="text-light-2 text-lg text-base-semibold">Edit Thread</h1>
       {userInfo.threads.includes(params.id) && (
-        <EditThread threadId={params.id} threadContent={thread.text} />
+        <EditThread threadId={params.id} threadContent={thread.text} threadImage={thread.image} />
       )}
     </section>
   );
