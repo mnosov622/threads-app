@@ -1,8 +1,7 @@
 "use client";
 
-import { addLikeToPost, fetchPosts, removeLikeFromPost } from "@/lib/actions/thread.actions";
+import { addLikeToPost, removeLikeFromPost } from "@/lib/actions/thread.actions";
 import Image from "next/image";
-import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 
 interface Props {

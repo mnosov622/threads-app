@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -19,11 +18,10 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import * as z from "zod";
 import Image from "next/image";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { isBase64Image } from "@/lib/utils";
-import { fetchUser, updateUser } from "@/lib/actions/user.actions";
+import { updateUser } from "@/lib/actions/user.actions";
 import { usePathname, useRouter } from "next/navigation";
-import { currentUser } from "@clerk/nextjs";
 import Loader from "@/components/shared/Loader";
 
 interface Props {
