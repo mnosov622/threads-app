@@ -31,7 +31,7 @@ interface Props {
 
 function EditThread({ threadId, threadContent, threadImage }: Props) {
   const [loading, setIsLoading] = useState(false);
-  const [files, setFiles] = useState<File[]>([]);
+  const [files, setFiles] = useState<any>();
 
   const router = useRouter();
 
@@ -68,7 +68,7 @@ function EditThread({ threadId, threadContent, threadImage }: Props) {
   const onSubmit = async (values: z.infer<typeof EditThreadValidation>) => {
     setIsLoading(true);
     try {
-      await updateThreadById(threadId, values.thread, pathname);
+      await updateThreadById(threadId, values, pathname);
       setTimeout(() => {
         router.back();
       }, 500);

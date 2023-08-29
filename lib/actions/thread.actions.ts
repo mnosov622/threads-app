@@ -298,13 +298,12 @@ export async function deleteThreadById(threadId: string) {
   }
 }
 
-export async function updateThreadById(threadId: string, text: string, path: string) {
+export async function updateThreadById(threadId: string, values: any, path: string) {
   try {
     connectToDB();
 
-    await Thread.findByIdAndUpdate(threadId, { text });
+    await Thread.findByIdAndUpdate(threadId, { text: values.thread, image: values.image });
 
-    console.log("function call");
     revalidatePath(path);
   } catch (e) {
     throw new Error("Unable to update a post");
