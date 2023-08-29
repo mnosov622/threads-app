@@ -2,6 +2,14 @@
 // Above resource shows how to setup uploadthing. Copy paste most of it as it is.
 // We're changing a few things in the middleware and configs of the file upload i.e., "media", "maxFileCount"
 
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: "4mb", // Set desired value here
+    },
+  },
+};
+
 import { currentUser } from "@clerk/nextjs";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 
