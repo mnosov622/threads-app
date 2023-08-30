@@ -251,7 +251,6 @@ export async function addLikeToPost(threadId: string, userId: string) {
     // Increment the like count for the post
     thread.likes += 1;
     thread.usersLiked.push(userId.toString());
-    console.log("thread", thread);
     // Save the updated post to the database
     await thread.save();
   } catch (err) {
@@ -278,8 +277,6 @@ export async function removeLikeFromPost(threadId: string, userId: string) {
 
     // Remove the userId from usersLiked array
     thread.usersLiked.splice(userIndex, 1);
-
-    console.log("thread", thread);
 
     // Save the updated post to the database
     await thread.save();
