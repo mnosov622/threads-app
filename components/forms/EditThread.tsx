@@ -22,6 +22,8 @@ import { ChangeEvent, useState } from "react";
 import Loader from "../shared/Loader";
 import Image from "next/image";
 import { Input } from "../ui/input";
+import { isBase64Image } from "@/lib/utils";
+import { useUploadThing } from "@/lib/uploadthing";
 
 interface Props {
   threadId: string;
@@ -32,6 +34,7 @@ interface Props {
 function EditThread({ threadId, threadContent, threadImage }: Props) {
   const [loading, setIsLoading] = useState(false);
   const [files, setFiles] = useState<any>();
+  const { startUpload } = useUploadThing("media");
 
   const router = useRouter();
 
@@ -68,6 +71,18 @@ function EditThread({ threadId, threadContent, threadImage }: Props) {
   const onSubmit = async (values: z.infer<typeof EditThreadValidation>) => {
     setIsLoading(true);
     try {
+      const blob: any = values.image;
+
+      const hasImageChanged = isBase64Image(blob);
+
+      if (hasImageChanged) {
+        const imgRes = await startUpload(files);
+
+        if (imgRes && imgRes[0].fileUrl) {
+          values.image = imgRes[0].fileUrl;
+        }
+      }
+
       await updateThreadById(threadId, values, pathname);
       setTimeout(() => {
         router.back();
