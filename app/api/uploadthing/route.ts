@@ -1,11 +1,3 @@
-export const config = {
-  api: {
-    bodyParser: {
-      sizeLimit: "4mb", // Set desired value here
-    },
-  },
-};
-
 import { createNextRouteHandler } from "uploadthing/next";
 
 import { ourFileRouter } from "./core";
