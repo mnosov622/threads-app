@@ -2,7 +2,7 @@
   <img src="https://github.com/mnosov622/threads-app/blob/main/public/assets/logo.svg" alt="Image Keeper Logo" width="100" height="auto">
 </p>
 
-# Image Keeper
+# Threads App
 
 **Discover My Next.js 13 Project:**
 
