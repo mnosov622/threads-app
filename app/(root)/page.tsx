@@ -10,9 +10,6 @@ import { fetchUser } from "@/lib/actions/user.actions";
 import { useEffect } from "react";
 import Image from "next/image";
 
-export const maxDuration = 300;
-
-
 async function Home({ searchParams }: { searchParams: { [key: string]: string | undefined } }) {
   const user = await currentUser();
   if (!user) redirect("/sign-in");
