@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 
 import { IncomingHttpHeaders } from "http";
 
+
 import { NextResponse } from "next/server";
 import {
   addMemberToCommunity,
@@ -27,6 +28,10 @@ type Event = {
   object: "event";
   type: EventType;
 };
+
+export const maxDuration = 300;
+
+
 
 export const POST = async (request: Request) => {
   const payload = await request.json();

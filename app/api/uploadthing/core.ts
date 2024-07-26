@@ -5,6 +5,8 @@
 import { currentUser } from "@clerk/nextjs";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 
+export const maxDuration = 300;
+
 const f = createUploadthing();
 
 const getUser = async () => await currentUser();
